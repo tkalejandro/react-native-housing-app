@@ -16,10 +16,11 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const {id} = req.params
     try {
-        const response = await House.findById(id)
-        res.json(response)
+        const houseId = req.params.id
+        const house = await House.findOne({_id: houseId})
+        if(!house) return res.json({message: "Didnt find this house"})
+        res.json(house)
     } catch (err) {
         console.log(err)
         res.send({ message: e })
@@ -72,10 +73,10 @@ router.post('/', [houseValidation(), errorValidationChecker()], async (req, res)
 })
 
 router.put('/:id', [houseValidation(), errorValidationChecker()] , async (req, res) => {
-    const houseId = req.params.id
-
     try {
-        const house = await House.findById(houseId)
+        const houseId = req.params.id
+        const house = await House.findOne({_id: houseId})
+        if(!house) return res.json({message: "Didnt find this house"})
 
         house.title = req.body.title
         house.address = req.body.address
@@ -94,6 +95,20 @@ router.put('/:id', [houseValidation(), errorValidationChecker()] , async (req, r
     }
 })
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const houseId = req.params.id
+        const house = await House.findOne({_id: houseId})
+        if(!house) return res.json({message: "Didnt find this house"})
 
+        //?This save automatically
+        await House.findOneAndDelete({_id: houseId})
+        
+        res.json({message: "House Deleted"})
+    } catch (err) {
+        console.log(err)
+        res.send({message: err})
+    }
+})
 //module.exports = router;
 export default router
