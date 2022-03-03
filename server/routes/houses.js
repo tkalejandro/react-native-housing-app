@@ -71,5 +71,29 @@ router.post('/', [houseValidation(), errorValidationChecker()], async (req, res)
 
 })
 
+router.put('/:id', async (req, res) => {
+    const houseId = req.params.id
+
+    try {
+        const house = await House.findById(houseId)
+
+        house.title = req.body.title
+        house.address = req.body.address
+        house.homeType = req.body.homeType
+        house.description = req.body.description
+        house.price = req.body.price
+        house.image = req.body.image
+        house.yearBuilt = req.body.yearBuilt 
+
+        await house.save()
+
+        res.status(200).json(house)
+    } catch (err) {
+        console.log(err)
+        res.send(err)
+    }
+})
+
+
 //module.exports = router;
 export default router
