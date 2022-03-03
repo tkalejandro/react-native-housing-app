@@ -71,7 +71,7 @@ router.post('/', [houseValidation(), errorValidationChecker()], async (req, res)
 
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', [houseValidation(), errorValidationChecker()] , async (req, res) => {
     const houseId = req.params.id
 
     try {
@@ -90,7 +90,7 @@ router.put('/:id', async (req, res) => {
         res.status(200).json(house)
     } catch (err) {
         console.log(err)
-        res.send(err)
+        res.send({message: e})
     }
 })
 

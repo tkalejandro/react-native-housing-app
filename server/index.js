@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.use('/api/houses', houses)
 const port = process.env.PORT || 3000
 
-mongoose.connect(`mongodb+srv://tkalejandro:qwert1234@cluster0.3hieq.mongodb.net/housing_app?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.3hieq.mongodb.net/housing_app?retryWrites=true&w=majority`)
 .then(result => {
     
     app.listen(port, () => console.log(`Server is running on ${port}`))
