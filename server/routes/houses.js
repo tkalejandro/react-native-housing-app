@@ -5,6 +5,26 @@ import houseValidation from "../validator/houseValidation.js"
 import errorValidationChecker from "../middleware/errorValidationChecker.js"
 const router = express.Router()
 
+router.get('/', async (req, res) => {
+    try {
+        const response = await House.find()
+        res.json(response)
+    } catch (err) {
+        console.log(err)
+        res.send({ message: e })
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    const {id} = req.params
+    try {
+        const response = await House.findById(id)
+        res.json(response)
+    } catch (err) {
+        console.log(err)
+        res.send({ message: e })
+    }
+})
 
 // /api/houses/
 router.post('/', [houseValidation(), errorValidationChecker()], async (req, res) => {
