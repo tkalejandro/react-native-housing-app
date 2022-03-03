@@ -1,75 +1,32 @@
-const express = require('express')
-const bodyParser =  require('body-parser')
+// const express = require('express')
+// const mongoose = require('mongoose')
+
+import express from "express";
+import mongoose from "mongoose"
+import dotenv from "dotenv"
+import morgan from "morgan";
+
+//? Route
+//const houses = require("./routes/houses")
+import houses from "./routes/houses.js"
+
+//? Translate the req.
+// const bodyParser =  require('body-parser')
 const app = express()
+dotenv.config()
+
+app.use(morgan("tiny"))
 app.use(express.json());
-
-require('dotenv').config()
-
-const homes =[
-    {id: 1,
-    type: "apartment",
-    description: "description",
-   }, 
-   {id: 2,
-    type: "apartment",
-    description: "description",
-   }
-]
-app.get('/', (req,res) => {
-    res.send('Welcome to express')
+app.get('/', (req, res) => {
+    res.send('Welcome to the house listing API')
 })
-app.get('/api/listing', (req, res) => {
-    res.send(homes)
-})
-app.get('/api/listing/:id', (req, res) => {
-    const {id} = req.params
-
-    const home = homes.find(home => home.id === parseInt(id))
-    if(!home) {
-        res.status(404).send('The home with given ID is not found')
-    }
-
-    res.send(home)
-   
-})
-
-app.post('/api/listing', (req, res) => {
-    if(!req.body.type || !req.body.description) return res.status(400).send("Title and description is required")
-    const home = {
-        id: homes.length + 1,
-        type: req.body.type,
-        description: req.body.description
-    }
-
-    homes.push(home)
-    res.send(home)
-})
-
-app.put('/api/listing/:id', (req, res) => {
-    const home = homes.find(home => home.id === parseInt(req.params.id))
-    
-    if(!home) {
-        res.status(404).send('The home with given ID is not found')
-    }
-
-    home.type = req.body.type
-    home.description = req.body.description
-   
-    res.send(home)
-   
-})
-
-app.delete('/api/listing/:id', (req, res) => {
-    const home = homes.find(home => home.id === parseInt(req.params.id))
-    
-    if(!home) {
-        res.status(404).send('The home with given ID is not found')
-    }
-
-    const index = homes.indexOf(home)
-    homes.splice(index, 1)
-    res.send(home)
-})
-
+app.use('/api/houses', houses)
 const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Server is running on ${port}`))
+
+mongoose.connect(`mongodb+srv://tkalejandro:qwert1234@cluster0.3hieq.mongodb.net/housing_app?retryWrites=true&w=majority`)
+.then(result => {
+    
+    app.listen(port, () => console.log(`Server is running on ${port}`))
+})
+.catch( err => console.log(err))
+
