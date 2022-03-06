@@ -2,15 +2,15 @@ import React from "react"
 import {StyleSheet, View, Text} from "react-native"
 import Card from "../components/Card/Card"
 import { FloatingAction } from "react-native-floating-action";
-const HomeListScreen = () => {
+const HomeListScreen = (props) => {
     return (
         <View style={styles.container}>
-            <Card />
+            <Card navigation={props.navigation} />
             <FloatingAction
                 position="right"
                 //animated={false}
                 shadowBackground={false}
-                onPressMain={() => console.log("u press me")}
+                onPressMain={() => props.navigation.navigate("AddHome")}
              />
         </View>
     )

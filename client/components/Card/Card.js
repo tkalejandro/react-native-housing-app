@@ -1,10 +1,13 @@
 import React from "react"
-import {StyleSheet, View, Text, ImageBackground} from "react-native"
+import {StyleSheet, View, Text, ImageBackground, TouchableOpacity} from "react-native"
 
 
-const Card = () => {
+const Card = (props) => {
     return(
-        <View style={styles.card}>
+        <TouchableOpacity
+            onPress={() => props.navigation.navigate("HomeDetails")}
+        >
+            <View style={styles.card}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Title</Text>
             </View>
@@ -22,6 +25,7 @@ const Card = () => {
                 <Text style={styles.descriptionText}>This is the description.</Text>
             </View>
         </View>
+        </TouchableOpacity>
     )
 }
 
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: "100%",
-        height: "50%",
+        height: "65%",
     },
     image: {
         width: "100%",
