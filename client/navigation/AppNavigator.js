@@ -6,7 +6,7 @@ import AboutScreen from "../screens/AboutScreen";
 import AddHomeScreen from "../screens/AddHomeScreen";
 import HomeDetailsScreen from "../screens/HomeDetailsScreen";
 import HomeListScreen from "../screens/HomeListScreen";
-
+import {MaterialIcons} from "@expo/vector-icons"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -44,7 +44,20 @@ const AboutStackNavigator = () => {
 const AppNavigator = () => {
     return (
         <NavigationContainer>
-            <Tab.Navigator>
+            <Tab.Navigator
+                screenOptions={({route}) => ({
+                    tabBarIcon: () => {
+                        let iconName;
+                        if(route.name === "HomeTab") {
+                            iconName = "home"
+                        } else if(route.name === "AboutTab") {
+                            iconName = "info"
+                        }
+
+                        return <MaterialIcons name={iconName} size={24} />
+                    }
+                })}
+            >
                 <Tab.Screen
                     name="HomeTab"
                     component={HomeStackNavigator}
