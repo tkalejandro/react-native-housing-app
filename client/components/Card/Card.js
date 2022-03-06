@@ -9,20 +9,20 @@ const Card = (props) => {
         >
             <View style={styles.card}>
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>Title</Text>
+                <Text style={styles.title}>{props.title}</Text>
             </View>
             <View style={styles.imageContainer}>
-                <ImageBackground source={require("../../assets/house1.jpeg")} style={styles.image}>
+                <ImageBackground source={props.image !== "" ? {uri: props.image} : require("../../assets/house1.jpeg")} style={styles.image}>
                     <Text style={styles.price}>
-                        $200.000
+                        ${props.price}
                     </Text>
                     <View style={styles.year}>
-                        <Text style={styles.yearText}>2022</Text>
+                        <Text style={styles.yearText}>{props.yearBuilt ? props.yearBuilt : "2022"}</Text>
                     </View>
                 </ImageBackground>
             </View>
             <View style={styles.description}>
-                <Text style={styles.descriptionText}>This is the description.</Text>
+                <Text style={styles.descriptionText}>{props.description}</Text>
             </View>
         </View>
         </TouchableOpacity>
@@ -63,10 +63,19 @@ const styles = StyleSheet.create({
         alignItems: "flex-end"
         
     },
+    description: {
+        height: "15%",
+        margin: 10
+    },
+    descriptionText:{
+        fontSize: 18,
+        color: "gray",
+        
+    },
     price: {
         fontSize: 30,
         color: "#fff",
-        margin: 10
+        margin: 10,
     },
     year: {
         margin: 10,
@@ -79,7 +88,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#fff",
         textAlign: "center"
-    }
+    },
 })
 
 export default Card
