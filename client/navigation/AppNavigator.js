@@ -1,14 +1,14 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AboutScreen from "../screens/AboutScreen";
 import AddHomeScreen from "../screens/AddHomeScreen";
 import HomeDetailsScreen from "../screens/HomeDetailsScreen";
 import HomeListScreen from "../screens/HomeListScreen";
-import {MaterialIcons} from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons"
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 
@@ -33,10 +33,10 @@ const HomeStackNavigator = () => {
 const AboutStackNavigator = () => {
     return (
         <Stack.Navigator>
-        <Stack.Screen
-            name="About"
-            component={AboutScreen} />
-    </Stack.Navigator>
+            <Stack.Screen
+                name="About"
+                component={AboutScreen} />
+        </Stack.Navigator>
     )
 }
 
@@ -45,12 +45,12 @@ const AppNavigator = () => {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                screenOptions={({route}) => ({
+                screenOptions={({ route }) => ({
                     tabBarIcon: () => {
                         let iconName;
-                        if(route.name === "HomeTab") {
+                        if (route.name === "HomeTab") {
                             iconName = "home"
-                        } else if(route.name === "AboutTab") {
+                        } else if (route.name === "AboutTab") {
                             iconName = "info"
                         }
 
@@ -61,12 +61,12 @@ const AppNavigator = () => {
                 <Tab.Screen
                     name="HomeTab"
                     component={HomeStackNavigator}
-                    options={{headerShown: false}}
+                    options={{ headerShown: false }}
                 />
                 <Tab.Screen
                     name="AboutTab"
                     component={AboutStackNavigator}
-                    options={{headerShown: false}}
+                    options={{ headerShown: false }}
                 />
             </Tab.Navigator>
         </NavigationContainer>
