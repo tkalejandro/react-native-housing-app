@@ -1,21 +1,34 @@
-import React from "react"
-import { StyleSheet, View, Text, ScrollView, TextInput, Button } from "react-native"
+import React, {useState} from "react"
+import { StyleSheet, View, Text, ScrollView, TextInput, Button, Alert, ActivityIndicator } from "react-native"
 import { Formik } from "formik"
 import * as yup from "yup"
-
+import * as houseAction from "../redux/actions/houseAction"
+import { useDispatch } from "react-redux"
 const formSchema = yup.object({
     title: yup.string().required().min(3).max(50),
     price: yup.number().required(),
     yearBuilt: yup.number().required(),
     image: yup.string().required(),
     address: yup.string().required(),
-    description: yup.string().required().min(10).max(10),
+    description: yup.string().required().min(10).max(50),
     homeType: yup.string().required(),
 })
 
 
 const AddHomeScreen = () => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    if(isLoading) {
+        return (
+            <View style={styles.center}>
+                    <ActivityIndicator size="large" />
+            </View>
+        )
+    }
+
     //? ScrollView To make sure small phones has no problems.
+
+    const dispatch = useDispatch()
     return (
 
 
@@ -33,7 +46,16 @@ const AddHomeScreen = () => {
                 }}
                 validationSchema={formSchema}
                 onSubmit={(values) => {
-                    console.log(values)
+                    setIsLoading(true)
+                    dispatch(houseAction.createHome(values))
+                    .then( () => {
+                        setIsLoading(false)
+                        Alert.alert('Created Succesfully')
+                    })
+                    .catch(() => {
+                        setIsLoading(false)
+                        Alert.alert('An error ocurred. Try Again', [{text: 'OK'}])
+                    })
                 }}
             >
                 {(props) => (
@@ -154,6 +176,11 @@ const styles = StyleSheet.create({
     },
     error: {
         color: "red",
+    },
+    center: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
 

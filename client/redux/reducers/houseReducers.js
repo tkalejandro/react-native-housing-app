@@ -1,4 +1,4 @@
-import { FETCH_HOUSES } from "../actions/houseAction"
+import { CREATE_HOUSES, FETCH_HOUSES } from "../actions/houseAction"
 
 const initialState = {
     houses: []
@@ -11,6 +11,12 @@ const houseReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     houses: action.payload
+                }
+            case CREATE_HOUSES:
+                //? The payload comes with {data: {}, message: ""}
+                return {
+                    ...state,
+                    houses: state.houses.concat(action.payload.data)
                 }
         }
     return state
