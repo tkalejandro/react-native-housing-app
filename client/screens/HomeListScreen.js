@@ -19,6 +19,7 @@ const HomeListScreen = (props) => {
                 keyExtractor={item => item._id}
                 renderItem={({item}) => (
                     <Card navigation={props.navigation}
+                        _id={item._id}
                         title={item.title}
                         address={item.address}
                         homeType={item.homeType}
