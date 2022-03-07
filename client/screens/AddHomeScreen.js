@@ -17,11 +17,11 @@ const formSchema = yup.object({
 
 const AddHomeScreen = () => {
     const [isLoading, setIsLoading] = useState(false)
-
+    //? COLOR is needed to work correctly. there might be the default color is same as background.
     if(isLoading) {
         return (
             <View style={styles.center}>
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large" color="black"/>
             </View>
         )
     }

@@ -16,7 +16,7 @@ const HomeListScreen = (props) => {
         .then(() => setIsLoading(false))
         .catch(() => setIsLoading(false))
     }, [dispatch])
-
+    //? COLOR is needed to work correctly. there might be the default color is same as background.
     if(isLoading) {
         return (
             <View style={styles.center}>
