@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import morgan from "morgan";
 //? Routes
 import auth from "./routes/auth.js"
+import verifyToken from "./middleware/verifyToken.js";
 
 const app = express()
 dotenv.config()
@@ -12,6 +13,9 @@ app.use(morgan("tiny"))
 app.use(express.json()); //? Body PArser
 app.get("/", (req, res) => {
     res.send("Welcome to the auth system")
+})
+app.get("/api/user/profile", verifyToken(), (req, res) => {
+    res.send('This is the user profile')
 })
 
 app.use("/api/users", auth)
