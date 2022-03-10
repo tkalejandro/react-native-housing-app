@@ -5,20 +5,20 @@ const initialState = {
 }
 
 const houseReducer = (state = initialState, action) => {
-        switch(action.type) {
+    switch (action.type) {
 
-            case FETCH_HOUSES:
-                return {
-                    ...state,
-                    houses: action.payload
-                }
-            case CREATE_HOUSES:
-                //? The payload comes with {data: {}, message: ""}
-                return {
-                    ...state,
-                    houses: state.houses.concat(action.payload.data)
-                }
-        }
+        case FETCH_HOUSES:
+            return {
+                ...state,
+                houses: action.payload
+            }
+        case CREATE_HOUSES:
+            //? The payload comes with {data: {}, message: ""}
+            return {
+                ...state,
+                houses: state.houses.concat(action.payload.data)
+            }
+    }
     return state
 }
 
